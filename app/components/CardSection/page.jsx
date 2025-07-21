@@ -4,7 +4,7 @@ import { assets, blog_data } from '../../assets/assets';
 import Image from 'next/image';
 import Link from 'next/link';
 import axios from 'axios';
-const CardSection = ({active}) => {
+export default  CardSection = ({active}) => {
  const [blogs, setblogs] = useState([]);
 
  async function fetchblogs(){
@@ -50,4 +50,3 @@ const CardSection = ({active}) => {
   )
 }
 
-export default CardSection
