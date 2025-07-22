@@ -2,7 +2,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { RxCross2 } from "react-icons/rx";
-import {useBlogContext} from "../../components/Context/page"
+import {useBlogContext} from "../../components/Context/BlogProvider"
 import Image from 'next/image';
 import { toast,ToastContainer } from 'react-toastify';
 const BlogList =  () => {

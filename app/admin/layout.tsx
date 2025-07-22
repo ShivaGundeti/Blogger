@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import SideBar from '../components/AdminComponents/SideBar'
-import { BlogProvider } from "../components/Context/page";
+import { BlogProvider } from "../components/Context/BlogProvider";
 
 export default function Layout({children}){
     return(

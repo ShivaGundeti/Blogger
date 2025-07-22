@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "app/components/Context/page.tsx"  ],
+, "app/components/Context/BlogProvider.tsx"  ],
   "exclude": [
     "node_modules"
   ]
