@@ -48,7 +48,7 @@ const BlogList = () => {
 
           <tbody className="divide-y divide-gray-200">
             {Userdata.blogs.map((data: Blog) => (
-              <tr key={data._id} className="hover:bg-gray-50 transition">
+              <tr key={data.id || data["_id"]} className="hover:bg-gray-50 transition">
                 <td className="px-6 py-4 text-left">
                   <div className="flex items-center gap-3">
                     <div className="rounded-full w-10 h-10 overflow-hidden">
@@ -72,7 +72,7 @@ const BlogList = () => {
                   <RxCross2
                     size={18}
                     className="mx-auto hover:text-red-500 transition cursor-pointer"
-                    onClick={() => DeleteData(data._id)}
+                    onClick={() => DeleteData(data.id || data["_id"])}
                   />
                 </td>
               </tr>
