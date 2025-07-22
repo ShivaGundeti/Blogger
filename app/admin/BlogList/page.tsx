@@ -1,73 +1,89 @@
-"use client"
-import axios from 'axios';
-import React, { useContext } from 'react'
-import { RxCross2 } from "react-icons/rx";
-import {useBlogContext} from "../../components/Context/page"
-import Image from 'next/image';
-import { toast,ToastContainer } from 'react-toastify';
-const BlogList =  () => {
-  
- const Userdata =  useBlogContext()
+"use client";
 
- function formatDate(dateString: string) {
-  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(dateString).toLocaleDateString('en-US', options);
-}
- const DeleteData = async (blogid: string)=>{
-  const response = await axios.delete('/api/blog',{
-    params:{
-      id:blogid
+import axios from "axios";
+import React from "react";
+import { RxCross2 } from "react-icons/rx";
+import { useBlogContext, Blog } from "../../components/Context/page";
+import Image from "next/image";
+import { toast, ToastContainer } from "react-toastify";
+
+
+const BlogList = () => {
+  const Userdata = useBlogContext() as { blogs: Blog[] };
+
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return new Date(dateString).toLocaleDateString("en-US", options);
+  };
+
+  const DeleteData = async (blogid: string) => {
+    try {
+      const response = await axios.delete("/api/blog", {
+        params: {
+          id: blogid,
+        },
+      });
+      toast.success(response.data.msg || "Blog deleted!");
+    } catch (error) {
+      toast.error("Failed to delete blog.");
     }
-  })
-  toast.success(response.data.msg);
- }
+  };
+
   return (
-    <div className="p-4 sm:p-6 ">
-      <div className="overflow-y-auto shadow-md  h-100 overflow-y-scroll">
-        <table className="min-w-full bg-white text-sm text-center ">
-          <thead className="text-gray-700 text-left hidden sm:table-header-group ">
-            <tr className='text-center  border-b border-gray-200'>
-              <th className="px-4 py-3 font-semibold uppercase">Author Name</th>
-              <th className="px-4 py-3 font-semibold uppercase">Blog Title</th>
-              <th className="px-4 py-3 font-semibold uppercase">Date</th>
-              <th className="px-4 py-3 font-semibold uppercase">Action</th>
+    <div className="p-4 sm:p-6">
+      <div className="overflow-x-auto shadow-md rounded-md">
+        <table className="min-w-full bg-white text-sm text-center">
+          <thead className="bg-gray-100 text-gray-700 uppercase text-sm font-semibold">
+            <tr>
+              <th className="px-6 py-3 text-left">Author</th>
+              <th className="px-6 py-3 text-left">Title</th>
+              <th className="px-6 py-3 text-left">Date</th>
+              <th className="px-6 py-3 text-center">Action</th>
             </tr>
           </thead>
+
           <tbody className="divide-y divide-gray-200">
-          {Userdata.blogs.map((data)=>(
-             <tr key={data._id} className="block sm:table-row border-b border-gray-200   shadow-sm sm:shadow-none mb-4 sm:mb-0">
-             
-              <td className="flex md:flex items-center gap-3 px-4 py-4 sm:table-cell sm:px-6 sm:py-4">
-                <div className="rounded-full w-10 h-10 overflow-hidden ">
-                  <img
-                        src={data?.image ||"https://placehold.co/600x400"}
+            {Userdata.blogs.map((data: Blog) => (
+              <tr key={data._id} className="hover:bg-gray-50 transition">
+                <td className="px-6 py-4 text-left">
+                  <div className="flex items-center gap-3">
+                    <div className="rounded-full w-10 h-10 overflow-hidden">
+                      <Image
+                        src={data?.image || "https://placehold.co/600x400"}
                         alt="profile"
-                        width={56}
-                        height={56}
+                        width={40}
+                        height={40}
                         className="object-cover w-full h-full"
-                    />
-                </div>
-                <span className="text-sm font-medium text-gray-800 ">{data.author}</span>
-            
-              </td>
-              <td className="px-4 py-2 text-gray-600 sm:table-cell sm:px-6">{data?.title}</td>
+                      />
+                    </div>
+                    <span className="text-sm font-medium text-gray-800">{data.author}</span>
+                  </div>
+                </td>
 
-            
-              <td className="px-4 py-2 text-gray-600 sm:table-cell sm:px-6">{formatDate(data?.date)}</td>
+                <td className="px-6 py-4 text-left text-gray-700">{data?.title}</td>
 
-            
-              <td className="px-4 py-2 sm:px-6 text-gray-600 cursor-pointer sm:table-cell">
-                <RxCross2 size={18} className="hover:text-red-500 transition" onClick={()=>DeleteData(data?._id)} />
-              </td>
-            </tr>
-          ))}
-            
+                <td className="px-6 py-4 text-left text-gray-600">{formatDate(data?.date)}</td>
+
+                <td className="px-6 py-4 text-center">
+                  <RxCross2
+                    size={18}
+                    className="mx-auto hover:text-red-500 transition cursor-pointer"
+                    onClick={() => DeleteData(data._id)}
+                  />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-      <ToastContainer/>
-    </div>
-  )
-}
 
-export default BlogList
+      <ToastContainer theme="dark" />
+    </div>
+  );
+};
+
+export default BlogList;
