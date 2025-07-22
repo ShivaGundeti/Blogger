@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { assets } from '../../assets/assets';
 import Image from 'next/image';
-import CardSection from '../CardSection/page';
+import CardSection from '../CardSection';
 import Link from 'next/link';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';

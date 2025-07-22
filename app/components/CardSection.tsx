@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { assets } from '../../assets/assets';
+import { assets } from '../assets/assets';
 import Image from 'next/image';
 import Link from 'next/link';
 import axios from 'axios';
 
-const CardSection = ({ active }) => {
+const CardSection = ({ active }:{ active: string }) => {
   const [blogs, setBlogs] = useState([]);
 
   const fetchBlogs = async () => {
